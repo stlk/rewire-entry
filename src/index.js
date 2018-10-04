@@ -63,7 +63,8 @@ function createRewire(params) {
       const isProd = env !== 'development';
 
       config.entry = bundles.reduce((acc, bundle) => {
-        acc[bundle] = [require.resolve('react-scripts/config/polyfills')].concat(
+        const baseArray = params.requirePolyfills ? [require.resolve('react-scripts/config/polyfills')] : []
+        acc[bundle] = baseArray.concat(
           isProd ? [] : require.resolve('react-dev-utils/webpackHotDevClient'),
           paths[`app${capitalize(bundle)}Js`]
         );
